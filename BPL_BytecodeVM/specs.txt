@@ -1,0 +1,72 @@
+Grammar:
+
+<program>       = [<block>]
+<block>         = [<if | fast_if> | <loop> | <assignment> | <function_call> | <break>]
+<if>            = "if" ":" <condition> "{" [<block>] "}" | {<elif>} | <else>
+<elif>          = "elif" ":" <condition> "{" [<block>] "}"
+<else>          = "else" ":" "{" [<block>] "}"
+<condition>     = [<expression> <comp_op> <expression>]
+<loop>          = "loop" "{" [<block>] "}"
+<assignment>    = <varname> [<asign_op> {<string> | <expression>}]";"
+<function_call> = <funcrion_name>"("<args>")"
+<args>          = {<expression> { "," <expression>}}
+<break>         = "break"
+<expression>    = <term> {<add_op> <term>} <exp_end_op>
+<term>          = <factor> {<mul_op> <factor>}
+<factor>        = <number> | <varname> | <function_call> | <inline_func> | "("
+<add_op>        = "+" | "-"
+<mul_op>        = "*" | "/"  | "%"
+<comp_op>       = ">" | "<"  | ">=" | "<=" | "==" | "!="
+<asign_op>      = "=" | "+=" | "-=" | "/=" | "*=" 
+<fast_asign_op> = "++"| "--" 
+<exp_end_op>    = ";" | "," | "{" | <comp_op>
+<inline_func>   = <inline_switch>
+<inline_switch> = "#" "{" <expression> ":"<expression> "->" <expression> {";"<expression> "->" <expression>} "}"
+<inline_if>     = "?" "{" <condition> ":" <expression>:<expression>"}"
+<function_def>  = "fn" ":" <funcrion_name>("<varname> | {","<varname>}")" "{"<program>"}"
+<return>        = "return" ":" <expression>
+
+Keywords:
+    if
+    elif
+    else
+    loop
+    break
+    ?
+    #
+    num
+    str
+    fn
+    return
+Operators:
+    +
+    -
+    *
+    /
+    %
+    =
+    >
+    <
+    >=
+    <=
+    ==
+    !=
+    {
+    }
+    :
+    ;
+    +=
+    -=
+    /=
+    *=
+    --
+    ++
+Serialized data structure:
+Header: BPL
+uint32 blocks_count
+blocks...
+
+
+
+
+Block = "{"uint8 type":" data.... "}"
